@@ -1,0 +1,67 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #0b1220; /* page background */
+  --blob1: #4f46e5; /* indigo-600 */
+  --blob2: #3b82f6; /* blue-500 */
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  background-color: var(--bg);
+  color: #fff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Reusable background with two blurred gradient blobs */
+.bg-app {
+  position: relative;
+  min-height: 100vh;
+  isolation: isolate;
+}
+.bg-app::before,
+.bg-app::after {
+  content: "";
+  position: fixed;
+  width: 28rem;
+  height: 28rem;
+  border-radius: 9999px;
+  filter: blur(48px);
+  opacity: 0.2;
+  z-index: -1;
+}
+.bg-app::before {
+  top: -6rem;
+  left: -8rem;
+  background: var(--blob1);
+}
+.bg-app::after {
+  bottom: -6rem;
+  right: -8rem;
+  background: var(--blob2);
+}
+
+/* Reusable UI atoms */
+@layer components {
+  .card {
+    @apply border shadow-2xl rounded-2xl border-white/10 bg-white/5 backdrop-blur-sm;
+  }
+  .input {
+    @apply w-full rounded-lg bg-white/5 border border-white/10 px-3 py-2.5 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-indigo-500/60 focus:border-indigo-500/60;
+  }
+  .btn-primary {
+    @apply w-full rounded-lg py-2.5 font-medium bg-indigo-500 hover:bg-indigo-500/90 active:bg-indigo-600 transition shadow-lg shadow-indigo-500/20;
+  }
+  .text-muted {
+    @apply text-white/60;
+  }
+  .link {
+    @apply text-indigo-400 hover:text-indigo-300 underline-offset-4 hover:underline;
+  }
+}
