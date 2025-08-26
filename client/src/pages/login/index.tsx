@@ -1,12 +1,22 @@
+import { Formik, Form } from "formik"; // Form'u da aldık
 import { type FC } from "react";
+import { Link } from "react-router-dom";
+import { initialLoginValues } from "../../constants";
+import type { LoginFormValues } from "../../types";
+import Input from "../../components/Input";
+import { LoginSchema } from "../../schemas";
+import useAuth from "../../hooks/useAuth";
 
 const Login: FC = () => {
+  const { login } = useAuth();
+  const onSubmit = (values: LoginFormValues) => {
+    login.mutate(values);
+  };
+
   return (
     <div className="flex items-center justify-center min-h-screen p-4 bg-app">
       <div className="w-full max-w-md">
         <div className="flex flex-col items-center">
-          {/* Logo */}
-
           <div className="flex justify-center mb-6 ms-6">
             <div className="flex items-center justify-center h-20 rounded-lg w-72">
               <img
@@ -17,7 +27,6 @@ const Login: FC = () => {
             </div>
           </div>
 
-          {/* Card */}
           <div className="w-full card">
             <div className="px-6 pt-6 pb-2 text-center">
               <h1 className="text-2xl font-semibold">
@@ -25,54 +34,40 @@ const Login: FC = () => {
               </h1>
             </div>
 
-            <form className="px-6 pt-2 pb-6 space-y-4">
-              <div className="space-y-2">
-                <label htmlFor="email" className="block text-sm text-white/80">
-                  Email address
-                </label>
-                <input
-                  id="email"
+            <Formik
+              initialValues={initialLoginValues}
+              onSubmit={onSubmit}
+              validationSchema={LoginSchema}
+            >
+              <Form className="px-6 pt-2 pb-6 space-y-8">
+                <Input
                   type="email"
-                  required
-                  autoComplete="email"
-                  placeholder="you@example.com"
-                  className="input"
+                  label="Email Address"
+                  name="email"
+                  placeholder="yusufyaman@example.com"
                 />
-              </div>
-
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <label
-                    htmlFor="password"
-                    className="block text-sm text-white/80"
-                  >
-                    Password
-                  </label>
-                  <a href="#" className="text-sm link">
-                    Forgot password?
-                  </a>
-                </div>
-                <input
-                  id="password"
+                <Input
                   type="password"
-                  required
-                  autoComplete="current-password"
+                  label="Password"
+                  name="password"
                   placeholder="••••••••"
-                  className="input"
                 />
-              </div>
+                <button
+                  type="submit"
+                  className="btn-primary"
+                  disabled={login.isPending}
+                >
+                  Login
+                </button>
 
-              <button type="submit" className="btn-primary">
-                Sign in
-              </button>
-
-              <p className="pt-2 text-sm text-center text-muted">
-                Not a member?{" "}
-                <a href="#" className="link">
-                  Start a 14 day free trial
-                </a>
-              </p>
-            </form>
+                <p className="pt-2 text-sm text-center text-muted">
+                  Don't have an account?
+                  <Link to="/register" className="mx-2 link">
+                    Register
+                  </Link>
+                </p>
+              </Form>
+            </Formik>
           </div>
         </div>
       </div>
