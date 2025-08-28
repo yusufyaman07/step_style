@@ -80,7 +80,7 @@ const UserInfo: FC = () => {
             <div className="py-1">
               <>
                 <Link
-                  to="/profile"
+                  to="/"
                   role="menuitem"
                   className="block w-full px-4 py-2 hover:bg-white/10 transition"
                   onClick={() => setOpen(false)}
