@@ -53,6 +53,10 @@ body {
 }
 
 @layer components {
+  body {
+    @apply py-[32px] px-[16px]  md:px-[32px] lg:px-[48px] xl:px-[60px];
+  }
+
   .card {
     @apply border shadow-2xl rounded-2xl border-white/10 bg-white/5 backdrop-blur-sm;
   }

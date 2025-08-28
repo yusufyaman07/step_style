@@ -9,8 +9,6 @@ interface Props {
 const Price: FC<Props> = ({ item, designs }) => {
   let price = item.price;
 
-  console.log(price);
-
   if (item.discount) {
     price = (item.price * (100 - item.discount)) / 100;
   }
